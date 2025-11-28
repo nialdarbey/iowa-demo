@@ -1,9 +1,148 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Site</title>
-  </head>
-  <body>
-    <h1>Hello from GitHub Pages!</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload a Photo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <style>
+    :root {
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: #020617;
+      font-family: -apple-system, system-ui, sans-serif;
+      color: var(--text);
+    }
+
+    .screen {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      padding: 22px 20px 10px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Big tappable label */
+    .tap-area {
+      flex: 1;
+      margin: 16px;
+      border-radius: 24px;
+      border: 2px dashed rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, var(--accent-soft), #020617);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .camera-icon {
+      font-size: 56px;
+      margin-bottom: 14px;
+    }
+
+    .tap-text {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .tap-helper {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Visually hide the input but keep it associated with the label */
+    #photoInput {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="screen">
+    <div class="header">
+      <div class="title">Upload a document photo</div>
+      <div class="subtitle">Tap the box and your camera will open.</div>
+    </div>
+
+    <form
+      id="uploadForm"
+      action="https://iowa-demo-1yk5ce.5sc6y6-3.usa-e2.cloudhub.io/upload"
+      method="POST"
+      enctype="multipart/form-data"
+      target="_blank"
+      class="screen"
+    >
+      <!-- The entire label is the tap target -->
+      <label class="tap-area" for="photoInput">
+        <div class="camera-icon">📷</div>
+        <div class="tap-text">Tap anywhere to take a photo</div>
+        <div class="tap-helper">Once you choose a photo, it will upload automatically.</div>
+      </label>
+
+      <input
+        id="photoInput"
+        type="file"
+        name="file"
+        accept="image/*"
+        capture="environment"
+      />
+    </form>
+
+    <div class="footer">
+      A new tab may open to ensure reliable upload from this device.
+    </div>
+  </div>
+
+  <script>
+    const photoInput = document.getElementById("photoInput");
+    const uploadForm = document.getElementById("uploadForm");
+
+    photoInput.addEventListener("change", () => {
+      if (photoInput.files && photoInput.files.length > 0) {
+        uploadForm.submit();
+      }
+    });
+  </script>
+</body>
 </html>
